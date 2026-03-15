@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UniqueNo | Burner Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glass-card">
+        <h1>UniqueNo</h1>
+        <p>Generate a unique, temporary virtual ID.</p>
+        
+        <select id="countrySelect">
+            </select>
+
+        <div id="displayArea" class="number-slot">----------</div>
+        
+        <button id="generateBtn">Generate Number</button>
+        <div id="timer" class="hidden">Expires in: 23:59:59</div>
+    </div>
+
+    <script type="module">
+        import { countryRegistry } from './registry.js';
+        import { NumberEngine } from './generator.js';
+
+        const engine = new NumberEngine();
+        const select = document.getElementById('countrySelect');
+        const display = document.getElementById('displayArea');
+
+        // Populate countries
+        countryRegistry.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.name;
+            opt.textContent = c.name;
+            select.appendChild(opt);
+        });
+
+        document.getElementById('generateBtn').onclick = () => {
+            const num = engine.generate(select.value);
+            display.textContent = num;
+            // Add animation class here
+        };
+    </script>
+</body>
+</html>
