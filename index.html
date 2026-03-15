@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>UniqueNo | Burner Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniqueNo | Secure Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -10,13 +11,17 @@
         <h1>UniqueNo</h1>
         <p>Generate a unique, temporary virtual ID.</p>
         
-        <select id="countrySelect">
-            </select>
+        <select id="countrySelect"></select>
 
         <div id="displayArea" class="number-slot">----------</div>
         
         <button id="generateBtn">Generate Number</button>
-        <div id="timer" class="hidden">Expires in: 23:59:59</div>
+        <div id="timer" class="hidden">Expires in 24 hours</div>
+
+        <div class="history-section">
+            <h3>Recent Generations</h3>
+            <ul id="historyList"></ul>
+        </div>
     </div>
 
     <script type="module">
@@ -26,20 +31,43 @@
         const engine = new NumberEngine();
         const select = document.getElementById('countrySelect');
         const display = document.getElementById('displayArea');
+        const historyList = document.getElementById('historyList');
 
-        // Populate countries
+        const updateHistoryUI = () => {
+            historyList.innerHTML = engine.getHistory().map(item => `
+                <li>
+                    <span>${item.country}: <strong>${item.number}</strong></span>
+                    <small>${item.time}</small>
+                </li>
+            `).join('');
+        };
+
         countryRegistry.forEach(c => {
             const opt = document.createElement('option');
-            opt.value = c.name;
-            opt.textContent = c.name;
+            opt.value = c.name; opt.textContent = c.name;
             select.appendChild(opt);
         });
 
         document.getElementById('generateBtn').onclick = () => {
             const num = engine.generate(select.value);
             display.textContent = num;
-            // Add animation class here
+            display.classList.remove('animate-roll');
+            void display.offsetWidth;
+            display.classList.add('animate-roll');
+            document.getElementById('timer').classList.remove('hidden');
+            updateHistoryUI();
         };
+
+        display.onclick = () => {
+            if (display.textContent.includes('-')) return;
+            navigator.clipboard.writeText(display.textContent).then(() => {
+                const oldText = display.textContent;
+                display.textContent = "Copied!";
+                setTimeout(() => { display.textContent = oldText; }, 1000);
+            });
+        };
+
+        updateHistoryUI();
     </script>
 </body>
 </html>

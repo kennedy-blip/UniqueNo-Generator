@@ -5,7 +5,10 @@ export const countryRegistry = [
     { name: "Ghana", code: "+233", length: 9, prefixes: ["24", "54", "55", "59"] },
     { name: "Ethiopia", code: "+251", length: 9, prefixes: ["9"] },
     { name: "Egypt", code: "+20", length: 10, prefixes: ["10", "11", "12", "15"] },
-    { name: "USA", code: "+1", length: 10, prefixes: ["201", "310", "646"] },
+    { name: "Tanzania", code: "+255", length: 9, prefixes: ["6", "7"] },
+    { name: "Uganda", code: "+256", length: 9, prefixes: ["7"] },
+    { name: "USA", code: "+1", length: 10, prefixes: ["201", "310", "646", "718"] },
     { name: "UK", code: "+44", length: 10, prefixes: ["7"] },
-    { name: "Japan", code: "+81", length: 10, prefixes: ["70", "80", "90"] }
+    { name: "Japan", code: "+81", length: 10, prefixes: ["70", "80", "90"] },
+    { name: "Germany", code: "+49", length: 11, prefixes: ["15", "16", "17"] }
 ];
